@@ -1,0 +1,56 @@
+{
+  "skill_name": "gooey-section-*",
+  "evals": [
+    {
+      "id": 1,
+      "name": "taffy-plain-html",
+      "skill": "gooey-section-taffy",
+      "prompt": "Here's the landing page for my studio site (landing.html). Add the taffy gooey edge between the sections. Save the finished page and anything it needs into the outputs folder.",
+      "expected_output": "landing.html with the engine loaded, the work, about and footer sections marked, and Taffy behaving exactly like the lab's tab 3.",
+      "files": [
+        "inputs/landing.html"
+      ],
+      "expectations": [
+        "The page runs in Chrome with no console errors",
+        "The work, about and footer top edges all goo when scrolled past",
+        "Peak goo height after a standard flick is within 2px of the lab's Taffy",
+        "On release the edge dips below the line in the upper colour, within 2px of the lab's Taffy dip",
+        "Goo height tracks the lab's Taffy frame by frame (mean difference under 2px over 130 frames)",
+        "The goo engine is the lab engine, byte for byte"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "honey-webflow",
+      "skill": "gooey-section-honey",
+      "prompt": "Building a client's stats section in Webflow. section_stats is dark green #0E3B2E and sits directly under section_intro, which is cream #F4F1EA. I want the honey goo on the top edge of section_stats. Write me exactly what to paste and where, saved as instructions.md in the outputs folder.",
+      "expected_output": "Step-by-step Webflow instructions: custom attribute on section_stats, the engine pasted inline in footer custom code with a honey init, colour handling, and a note that it only shows on the published site.",
+      "files": [],
+      "expectations": [
+        "Says where each piece goes in Webflow: an attribute or setting on section_stats, and code in Site or Page custom code before </body>",
+        "The pasted code is the lab engine verbatim, started with the honey variant",
+        "Covers both colours: #0E3B2E for the goo and #F4F1EA above it",
+        "Warns that it won't show on the Designer canvas or Preview, only on the published or staging site",
+        "Every code block is safe to paste: script tags balanced and under Webflow's 50,000-character limit",
+        "Only the top edge of section_stats is affected"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "slosh-nextjs",
+      "skill": "gooey-section-slosh",
+      "prompt": "Our Next.js homepage (Home.jsx, app router, Tailwind with bg-ink #121613 and bg-paper #FAFFFA) has three stacked sections. Add the slosh gooey edge between them. Save the updated component and any new files into the outputs folder.",
+      "expected_output": "Home.jsx marked up with a client-side effect that initialises the engine with slosh and destroys it on unmount; the engine file copied unchanged; the hero left unmarked.",
+      "files": [
+        "inputs/Home.jsx"
+      ],
+      "expectations": [
+        "The goo engine is the lab engine, byte for byte",
+        "Starts in a client-side effect with the slosh variant and cleans up on unmount",
+        "The thesis and portfolio sections are marked and the hero is not",
+        "No new npm dependencies are needed",
+        "Nothing touches window at module top level, so server rendering is safe"
+      ]
+    }
+  ]
+}
