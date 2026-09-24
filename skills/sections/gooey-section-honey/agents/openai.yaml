@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gooey Section: Honey"
+  short_description: "Heavy blob: slow rise, very slow droop"
+  default_prompt: "Use $gooey-section-honey to add the honey gooey edge between the sections of this page."

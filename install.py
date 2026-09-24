@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Link every skill in skills/ into ~/.claude/skills so Claude Code picks it up.
+"""Link every skill in skills/<category>/ into ~/.claude/skills so Claude Code finds it.
 
     python3 install.py           # link all skills (safe to rerun)
     python3 install.py --dry-run # show what would change
 
-It links rather than copies, so a skill edited here is live in every session.
+Claude Code wants skills one level deep, so each skill is linked by its own name
+(skill names must be unique across categories). It links rather than copies, so a
+skill edited here is live in every session.
 An existing entry is only replaced when it is a symlink that is broken or already
 points into this repo. A real folder, or a link to somewhere else, is left alone
 and reported, so nothing you installed another way gets overwritten.
@@ -24,7 +26,12 @@ def skill_name(d):
 
 problems = 0
 TARGET.mkdir(parents=True, exist_ok=True)
-for d in sorted(p for p in SKILLS.iterdir() if (p / 'SKILL.md').is_file()):
+found = sorted({p.parent for p in SKILLS.glob('*/*/SKILL.md')} | {p.parent for p in SKILLS.glob('*/SKILL.md')}, key=lambda p: p.name)
+seen = {}
+for d in found:
+    if d.name in seen:
+        print(f'skip   {d.relative_to(SKILLS)}: the name is already used by {seen[d.name].relative_to(SKILLS)}'); problems += 1; continue
+    seen[d.name] = d
     name = skill_name(d)
     if name != d.name:
         print(f'skip   {d.name}: SKILL.md name is {name!r}, it must match the folder name'); problems += 1; continue

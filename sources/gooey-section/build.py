@@ -3,18 +3,20 @@
 
     python3 sources/gooey-section/build.py
 
-Edit gooey-section.js, engine.md, demo.html (all beside this file) or the V text
-below, then rerun. Never edit the generated skills/gooey-section-* folders by hand:
+Edit gooey-section.js, engine.md, demo.html, PROMPT.md, REFERENCES.md (all beside this file) or
+the V text below, then rerun. Output goes to skills/sections/<name>/. A skill's
+demo/preview.jpg survives rebuilds; regenerate it with scripts/build-previews.cjs. Never edit the generated skills/gooey-section-* folders by hand:
 they are overwritten. Run `python3 install.py` from the repo root to link new skills.
 """
 import os, shutil, sys
 from pathlib import Path
 
 SRC = Path(__file__).resolve().parent
-OUT = SRC.parent.parent / 'skills'
+CATEGORY = 'sections'
+OUT = SRC.parent.parent / 'skills' / CATEGORY
 
 V = [
-  dict(key='wave', label='Wave', tab=1,
+  dict(key='wave', short='Broad flowing crest pulled by scroll speed', label='Wave', tab=1,
     oneliner='a broad, flowing crest with a soft shoulder trailing to its right',
     triggers="the wave goo, the wave edge, the wave section divider, 'the wave one' or Louis's favourite goo",
     feel="The calm, wide one, and Louis's favourite of the set. The bulge is a wide gaussian that gets fatter as it rises, plus a low shoulder (22% of the height) trailing to the right of the crest, so the edge reads as a rolling wave rather than a blob. It rises in about half a second under steady scrolling and relaxes smoothly with no overshoot. Its shape is also the one the anchored bump uses on every variant.",
@@ -26,7 +28,7 @@ V = [
     check='a wide, smooth swell with a small shoulder on its right, sinking back without ever passing below the line.',
     tuning=['Width: `sig` base 260 and widening 1.6.', 'Shoulder: 0.22 (height) and 1.15σ (offset) in the profile.', 'Strength: `vel` 2.2.', 'Speed: `drive.up` 0.13 (rise) and `drive.down` 0.045 (relax).'],
     other='taffy'),
-  dict(key='goo', label='Goo', tab=2,
+  dict(key='goo', short='Tight sticky bulge with sinking flanks', label='Goo', tab=2,
     oneliner='a tight, sticky pull whose flanks sink slightly before rejoining the flat line',
     triggers="the goo edge, 'the goo one' or the sticky goo",
     default=True,
@@ -39,7 +41,7 @@ V = [
     check='a tight bulge with the edge pulled slightly down on both sides of it, sinking back without overshooting.',
     tuning=['Width: `sig` 210 + 0.7.', 'Side-dip depth: the 0.25 in the profile (0 removes the dips).', 'Side-dip reach: the 2.6σ in the profile.', 'Strength: `vel` 2.2. Speed: `drive.up` 0.13 and `drive.down` 0.045.'],
     other='elastic'),
-  dict(key='taffy', label='Taffy', tab=3,
+  dict(key='taffy', short='Stretches on scroll, snaps back with one wobble', label='Taffy', tab=3,
     oneliner='it stretches smoothly while you scroll; let go and it drops, overshoots past flat, comes back and gives one small wobble',
     triggers="the taffy goo or taffy edge, or wants a scroll-driven section edge that stretches and then snaps back with a single wobble",
     feel="Viscous while it's being pulled, springy only on the let-go. While the scroll keeps pulling, the height eases toward the target like the calm variants. The moment the pull weakens, a spring takes over: it drops fast (half height in about 11 frames), swings below the line into a small dip (about a fifth of the peak, painted in the upper colour), comes back and settles after one more small wobble. The spring period is about 40 frames (0.67s at 60fps) and each swing is about 30% of the last. It's a little narrower than Goo and pulled a little less.",
@@ -51,7 +53,7 @@ V = [
     check='on release it falls fast, dips just below the line with the upper colour showing, rises back and wobbles once more, small, before settling.',
     tuning=['Wobble speed: `drive.k` 0.03 (higher is faster).', 'Wobble decay: `drive.damp` 0.885 (lower means fewer wobbles).', 'Pull: `drive.up` 0.13 and `vel` 1.8.', 'Width: `sig` 190 + 1.4.'],
     other='honey'),
-  dict(key='honey', label='Honey', tab=4,
+  dict(key='honey', short='Heavy blob: slow rise, very slow droop', label='Honey', tab=4,
     oneliner='a heavy, full blob that is slow to rise and droops back very slowly',
     triggers="the honey goo or honey edge, or wants a heavy, slow, syrupy or droopy section edge",
     feel="Weight and lag. It's pulled harder than any other variant (2.6× scroll speed) but follows sluggishly: the demand eases at 0.06/frame and the height at 0.08/frame, so it keeps swelling for a moment after the scroll stops. The release is the slowest of the set at 0.018/frame, a long droop of three to four seconds. The profile is a gaussian raised to the power 0.65, which is simply a fuller bump, about 24% wider, with a rounder top.",
@@ -63,7 +65,7 @@ V = [
     check='the blob keeps rising briefly after you stop, then sinks very slowly, still full and round.',
     tuning=['Heaviness: `drive.down` 0.018 (release) and `drive.up` 0.08 (rise).', 'Lag: `drive.demand` 0.06.', 'Fullness: the 0.65 exponent (lower gives a flatter, broader top).', 'Strength: `vel` 2.6.'],
     other='goo'),
-  dict(key='elastic', label='Elastic', tab=5,
+  dict(key='elastic', short='Springy edge that overshoots and twangs back', label='Elastic', tab=5,
     oneliner='twangy: it overshoots whatever the scroll asks for and springs back past flat before settling',
     triggers="the elastic goo or elastic edge, or wants a bouncy, springy, twangy or rubber-band section edge",
     feel="A pure spring throughout, while pulling and on release, so it overshoots the target even while you're still scrolling and twangs back. The spring period is about 25 frames (0.4s at 60fps) and each swing is about a quarter of the last. A short flick gives the clearest bounce: the bulge shoots up well past where the calm variants stop, then snaps back and dips a little past flat. It's the narrowest variant and pulled the least (1.6×), and it settles fastest of all.",
@@ -75,7 +77,7 @@ V = [
     check='the bulge springs up past the pull and wobbles while you scroll, then snaps back and dips a little past the line on release.',
     tuning=['Stiffness: `drive.k` 0.085 (higher is faster and twangier).', 'Bounciness: `drive.damp` 0.8 (higher means more bounces).', 'Width: `sig` 170 + 1.2. Strength: `vel` 1.6.'],
     other='wave'),
-  dict(key='twin', label='Twin', tab=6,
+  dict(key='twin', short='Main bulge plus a smaller blob beside it', label='Twin', tab=6,
     oneliner='the main pull with a smaller sympathetic blob rising beside it',
     triggers="the twin goo or twin edge, or wants a section edge with two blobs or a double bulge",
     feel="Two bumps instead of one. Alongside the main crest, a second blob 55% as tall and a bit narrower (0.62×) rises about 1.7σ to its right (about 320px at rest, further as it grows), with a saddle between them. The motion is the calm lerp: it rises in about half a second and relaxes smoothly with no overshoot. The main crest is fairly narrow and widens only slowly.",
@@ -87,7 +89,7 @@ V = [
     check='a main bulge under the cursor with a smaller one to its right, both rising and sinking together.',
     tuning=['Second blob height: 0.55.', 'Second blob position: 1.7σ to the right (a negative value puts it on the left).', 'Second blob width: 0.62σ.', 'Main width: `sig` 190 + 0.6.'],
     other='drift'),
-  dict(key='drift', label='Drift', tab=7,
+  dict(key='drift', short='Crest that surfs sideways as you scroll', label='Drift', tab=7,
     oneliner='the crest surfs sideways along the edge in the direction you scroll',
     triggers="the drift goo or drift edge, or wants a section edge whose bulge travels or surfs sideways as you scroll",
     feel="A single gaussian crest that travels. While the goo is stretched (more than 6px), its centre slides right when you scroll down and left when you scroll up, by up to 0.4% of the width per frame. That is full speed from about 25px of scroll per frame, roughly a quarter of the width per second at 60fps, and it never leaves the 12%–88% band of the width. Once the edge is slack again, the crest eases back to wait under the cursor. The height motion is the calm lerp, with no overshoot.",
@@ -99,7 +101,7 @@ V = [
     check='the bulge moves along the edge as you keep scrolling (right when scrolling down, left when scrolling up), then returns to the cursor once flat.',
     tuning=['Surf speed: the 0.004 step.', 'Speed sensitivity: the 0.04 factor on velocity.', 'Travel limits: 0.12–0.88 of the width.', 'Width: `sig` 200 + 0.8.', 'The surf constants live in `step()`, not the variant table, so they apply to every drift edge.'],
     other='slosh'),
-  dict(key='slosh', label='Slosh', tab=8,
+  dict(key='slosh', short='Liquid lean: rises one side, dips the other', label='Slosh', tab=8,
     oneliner='a liquid lean: the edge rises on one side of the cursor and dips on the other, like water tilting',
     triggers="the slosh goo or slosh edge, or wants a section edge that tilts, leans or sloshes like liquid",
     feel="Instead of a bump, the edge tilts. The profile is the negative derivative of a gaussian: scrolling down lifts the edge to the left of the cursor (peak about 1σ left, about 300px at rest) and sinks it to the right, where the dip is painted in the upper section's colour, with the crossing right under the cursor. Scrolling up tilts it the other way. It's the widest variant and pulled a bit harder (2.4×). The motion is the calm lerp, with no overshoot.",
@@ -111,7 +113,7 @@ V = [
     check="scrolling down, the edge climbs on the cursor's left and sinks on its right; scrolling up reverses it.",
     tuning=['Width of the lean: `sig` 300 + 0.7.', 'Strength: `vel` 2.4.', 'Direction: negate the profile to lean the other way.', 'The 1.6487 factor normalises the peak to 1. Leave it.'],
     other='peel'),
-  dict(key='peel', label='Peel', tab=9,
+  dict(key='peel', short='Fast drain from full stretch, slow peeling tail', label='Peel', tab=9,
     oneliner='it drains fast from full stretch, then the last of it peels off slowly',
     triggers="the peel goo or peel edge, or wants a section edge that lets go fast then lingers with a slow tail",
     feel="Goo's shape (a tight bulge with shallow side-dips) with a height-dependent release. The release rate falls as the goo drains, `0.012 + 0.09·a/(a + 60)` per frame: about 0.08 at 150px, 0.057 at 60px, 0.035 at 20px and 0.02 at 5px. A big stretch drops quickly at first, then the last few pixels linger and peel away slowly. Nothing overshoots. Compared with Goo it lets go faster at the top and takes about 50% longer to reach flat.",
@@ -178,7 +180,7 @@ The feel lives in about twenty hand-tuned constants and in physics that runs per
    <script>GooeyEdge.init({{ variant: '{key}' }});</script>
    ```
 
-`assets/demo.html` is a complete working page with this variant, including the optional anchored bump. Open it to see the target, or copy from it.
+`demo/index.html` is a complete working page with this variant, including the optional anchored bump, and `demo/preview.jpg` shows a frame of it. Open the page to see the target, or copy from it; it loads the engine from `../assets/`.
 
 To mix feels on one page, give a section its own value, for example `data-goo-edge="{other}"`.
 
@@ -243,30 +245,49 @@ GooeyEdge.init({{ variant: '{key}-soft' }});
 ```
 
 Copy `drive` too (`drive: {{ ...GooeyEdge.variants.{key}.drive, … }}`) before changing its numbers, so the original isn't mutated.
+
+Read [REFERENCES.md](REFERENCES.md) for the platform docs, and `references/engine.md` for the full API, the exact maths and troubleshooting.
 '''
+
+def fill(text, v):
+    return (text.replace('{{KEY}}', v['key']).replace('{{LABEL}}', v['label']).replace('{{TAB}}', str(v['tab']))
+                .replace('{{ONELINER}}', v['oneliner'][0].upper() + v['oneliner'][1:] + '.')
+                .replace('{{ONELINER_LC}}', v['oneliner']))
+
+def openai_yaml(v):
+    return (f'interface:\n'
+            f'  display_name: "Gooey Section: {v["label"]}"\n'
+            f'  short_description: "{v["short"]}"\n'
+            f'  default_prompt: "Use $gooey-section-{v["key"]} to add the {v["key"]} gooey edge between the sections of this page."\n')
 
 def build():
     engine = (SRC / 'gooey-section.js').read_bytes()
     ref = (SRC / 'engine.md').read_text()
     demo = (SRC / 'demo.html').read_text()
+    prompt = (SRC / 'PROMPT.md').read_text()
+    links = (SRC / 'REFERENCES.md').read_text()
     names = []
     for v in V:
         name = f"gooey-section-{v['key']}"
         d = OUT / name
+        keep = (d / 'demo' / 'preview.jpg').read_bytes() if (d / 'demo' / 'preview.jpg').exists() else None
         if d.exists():
             shutil.rmtree(d)
-        (d / 'assets').mkdir(parents=True)
-        (d / 'references').mkdir()
+        for sub in ('agents', 'assets', 'references', 'demo'):
+            (d / sub).mkdir(parents=True)
         body = TEMPLATE.format(description=description(v), tuning='\n'.join('- ' + t for t in v['tuning']),
                                vel=VEL[v['key']], softvel=round(VEL[v['key']] * 0.75, 2),
                                **{k: v[k] for k in ('key', 'label', 'tab', 'oneliner', 'feel', 'width', 'pull',
                                                     'rise', 'release', 'flick', 'check', 'other')})
         (d / 'SKILL.md').write_text(body)
+        (d / 'REFERENCES.md').write_text(links)
+        (d / 'agents' / 'openai.yaml').write_text(openai_yaml(v))
         (d / 'assets' / 'gooey-section.js').write_bytes(engine)
-        (d / 'assets' / 'demo.html').write_text(
-            demo.replace('{{KEY}}', v['key']).replace('{{LABEL}}', v['label'])
-                .replace('{{TAB}}', str(v['tab'])).replace('{{ONELINER}}', v['oneliner'][0].upper() + v['oneliner'][1:] + '.'))
         (d / 'references' / 'engine.md').write_text(ref)
+        (d / 'demo' / 'index.html').write_text(fill(demo, v))
+        (d / 'demo' / 'PROMPT.md').write_text(fill(prompt, v))
+        if keep:
+            (d / 'demo' / 'preview.jpg').write_bytes(keep)
         names.append(name)
     return names
 

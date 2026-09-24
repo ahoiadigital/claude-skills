@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gooey Section: Drift"
+  short_description: "Crest that surfs sideways as you scroll"
+  default_prompt: "Use $gooey-section-drift to add the drift gooey edge between the sections of this page."

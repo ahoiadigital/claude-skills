@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gooey section — {{LABEL}}</title>
+<title>Gooey section — Drift</title>
 <style>
   :root { --dark: #161B17; --cream: #F1F4EE; --paper: #FAFFFA; --ink: #121613; --neon: #2BEE4B; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,9 +21,9 @@
 <body>
 
 <section class="cream">
-  <div class="eyebrow">Gooey section · tab {{TAB}} of the lab</div>
-  <h1>{{LABEL}}</h1>
-  <p>{{ONELINER}} Scroll fast, then let go. Scroll back up for the reverse.</p>
+  <div class="eyebrow">Gooey section · tab 7 of the lab</div>
+  <h1>Drift</h1>
+  <p>The crest surfs sideways along the edge in the direction you scroll. Scroll fast, then let go. Scroll back up for the reverse.</p>
 </section>
 
 <section class="dark" data-goo-edge>
@@ -58,7 +58,7 @@
 
 <script src="../assets/gooey-section.js"></script>
 <script>
-  const goo = GooeyEdge.init({ variant: '{{KEY}}' });
+  const goo = GooeyEdge.init({ variant: 'drift' });
 
   // Used by scripts/build-previews.cjs: freeze the first edge mid-pull for preview.jpg
   window.__demoPose = () => {

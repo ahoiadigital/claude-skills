@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Gallery</title>
+<style>
+  :root { --bg: #F1F4EE; --ink: #161B17; --dim: rgba(22,27,23,.6); --card: #fff; --line: rgba(22,27,23,.12); }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111412; --ink: #EEF1EA; --dim: rgba(238,241,234,.6); --card: #1A1E1B; --line: rgba(238,241,234,.12); } }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, sans-serif; padding: 48px 16px 80px; }
+  main { max-width: 1240px; margin: 0 auto; }
+  h1 { font-size: clamp(28px, 4vw, 44px); letter-spacing: -.02em; }
+  .sub { color: var(--dim); margin: 6px 0 36px; }
+  h2 { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); margin: 36px 0 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+  a.card { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; color: inherit; text-decoration: none; }
+  a.card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  .meta { padding: 12px 14px 14px; }
+  .meta b { display: block; font-weight: 600; }
+  .meta span { color: var(--dim); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Skill Gallery</h1>
+  <p class="sub">9 demos across 1 category. Click a card to open the live demo.</p>
+  <h2>Section Skills</h2>
+  <div class="grid">
+    <a class="card" href="skills/sections/gooey-section-drift/demo/index.html"><img src="skills/sections/gooey-section-drift/demo/preview.jpg" alt="gooey-section-drift preview" loading="lazy"><div class="meta"><b>Gooey Section: Drift</b><span>Crest that surfs sideways as you scroll</span></div></a>
+    <a class="card" href="skills/sections/gooey-section-elastic/demo/index.html"><img src="skills/sections/gooey-section-elastic/demo/preview.jpg" alt="gooey-section-elastic preview" loading="lazy"><div class="meta"><b>Gooey Section: Elastic</b><span>Springy edge that overshoots and twangs back</span></div></a>
+    <a class="card" href="skills/sections/gooey-section-goo/demo/index.html"><img src="skills/sections/gooey-section-goo/demo/preview.jpg" alt="gooey-section-goo preview" loading="lazy"><div class="meta"><b>Gooey Section: Goo</b><span>Tight sticky bulge with sinking flanks</span></div></a>
+    <a class="card" href="skills/sections/gooey-section-honey/demo/index.html"><img src="skills/sections/gooey-section-honey/demo/preview.jpg" alt="gooey-section-honey preview" loading="lazy"><div class="meta"><b>Gooey Section: Honey</b><span>Heavy blob: slow rise, very slow droop</span></div></a>
+    <a class="card" href="skills/sections/gooey-section-peel/demo/index.html"><img src="skills/sections/gooey-section-peel/demo/preview.jpg" alt="gooey-section-peel preview" loading="lazy"><div class="meta"><b>Gooey Section: Peel</b><span>Fast drain from full stretch, slow peeling tail</span></div></a>
+    <a class="card" href="skills/sections/gooey-section-slosh/demo/index.html"><img src="skills/sections/gooey-section-slosh/demo/preview.jpg" alt="gooey-section-slosh preview" loading="lazy"><div class="meta"><b>Gooey Section: Slosh</b><span>Liquid lean: rises one side, dips the other</span></div></a>
+    <a class="card" href="skills/sections/gooey-section-taffy/demo/index.html"><img src="skills/sections/gooey-section-taffy/demo/preview.jpg" alt="gooey-section-taffy preview" loading="lazy"><div class="meta"><b>Gooey Section: Taffy</b><span>Stretches on scroll, snaps back with one wobble</span></div></a>
+    <a class="card" href="skills/sections/gooey-section-twin/demo/index.html"><img src="skills/sections/gooey-section-twin/demo/preview.jpg" alt="gooey-section-twin preview" loading="lazy"><div class="meta"><b>Gooey Section: Twin</b><span>Main bulge plus a smaller blob beside it</span></div></a>
+    <a class="card" href="skills/sections/gooey-section-wave/demo/index.html"><img src="skills/sections/gooey-section-wave/demo/preview.jpg" alt="gooey-section-wave preview" loading="lazy"><div class="meta"><b>Gooey Section: Wave</b><span>Broad flowing crest pulled by scroll speed</span></div></a>
+  </div>
+</main>
+</body>
+</html>

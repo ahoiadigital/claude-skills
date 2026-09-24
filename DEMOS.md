@@ -1,0 +1,53 @@
+# Skill Demos
+
+Every visual skill has a portable demo, a rendered preview and the exact prompt to recreate or remix it.
+
+## Folder contract
+
+```text
+skills/<category>/<skill-name>/
+  demo/
+    index.html     # standalone page: inline CSS, relative paths, no build step
+    PROMPT.md      # minimal, recreation and remix prompts
+    preview.jpg    # 1280 x 720 browser render
+```
+
+A demo may load the skill's own files from `../assets/`, so the skill folder stays the unit you copy.
+
+## Run a demo
+
+Open `demo/index.html` straight in a browser, or serve the skill folder:
+
+```bash
+python3 -m http.server 4173 -d skills/<category>/<skill-name>
+```
+
+Then visit http://localhost:4173/demo/.
+
+## Rebuild
+
+```bash
+node scripts/build-previews.cjs      # render demo/preview.jpg (needs puppeteer)
+node scripts/build-gallery.cjs       # this file, SCREENSHOTS.md/.html, README lists
+node scripts/validate-skills.cjs     # check every skill against the folder contract
+```
+
+## Library coverage
+
+- Total: 9
+- With demos: 9
+- sections: 9
+
+## Demo index
+
+| Skill | Category | Demo | Preview | Prompt |
+| --- | --- | --- | --- | --- |
+| gooey-section-drift | sections | [Open](skills/sections/gooey-section-drift/demo/index.html) | [Preview](skills/sections/gooey-section-drift/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-drift/demo/PROMPT.md) |
+| gooey-section-elastic | sections | [Open](skills/sections/gooey-section-elastic/demo/index.html) | [Preview](skills/sections/gooey-section-elastic/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-elastic/demo/PROMPT.md) |
+| gooey-section-goo | sections | [Open](skills/sections/gooey-section-goo/demo/index.html) | [Preview](skills/sections/gooey-section-goo/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-goo/demo/PROMPT.md) |
+| gooey-section-honey | sections | [Open](skills/sections/gooey-section-honey/demo/index.html) | [Preview](skills/sections/gooey-section-honey/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-honey/demo/PROMPT.md) |
+| gooey-section-peel | sections | [Open](skills/sections/gooey-section-peel/demo/index.html) | [Preview](skills/sections/gooey-section-peel/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-peel/demo/PROMPT.md) |
+| gooey-section-slosh | sections | [Open](skills/sections/gooey-section-slosh/demo/index.html) | [Preview](skills/sections/gooey-section-slosh/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-slosh/demo/PROMPT.md) |
+| gooey-section-taffy | sections | [Open](skills/sections/gooey-section-taffy/demo/index.html) | [Preview](skills/sections/gooey-section-taffy/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-taffy/demo/PROMPT.md) |
+| gooey-section-twin | sections | [Open](skills/sections/gooey-section-twin/demo/index.html) | [Preview](skills/sections/gooey-section-twin/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-twin/demo/PROMPT.md) |
+| gooey-section-wave | sections | [Open](skills/sections/gooey-section-wave/demo/index.html) | [Preview](skills/sections/gooey-section-wave/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-wave/demo/PROMPT.md) |
