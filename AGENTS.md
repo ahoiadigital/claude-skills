@@ -1,6 +1,6 @@
 # claude-skills — repo guide
 
-Louis's agent skills, published at https://github.com/ahoiadigital/claude-skills. **This repo is public.** Skills live in category folders, each skill with `SKILL.md`, `REFERENCES.md`, `agents/openai.yaml` and, for visual skills, a `demo/`.
+Louis's agent skills, published at https://github.com/loouis/claude-skills. **This repo is public.** Skills live in category folders, each skill with `SKILL.md`, `REFERENCES.md`, `agents/openai.yaml` and, for visual skills, a `demo/`.
 
 ## What to do here
 - Add new skills under `skills/<category>/`.
@@ -10,7 +10,7 @@ Louis's agent skills, published at https://github.com/ahoiadigital/claude-skills
 ## Working conventions
 - Read `STATUS.md` before starting and update it after substantive work.
 - Commit after every completed change, one skill per commit (`Add <skill-name> skill` / `Update <skill-name> skill`). Pushing publishes to the public repo, so push when Louis asks for it or confirms.
-- This repo commits with GitHub's no-reply address (set in the repo's local git config), so Louis's email stays out of the public history.
+- Commits here use GitHub's no-reply address for `loouis`, set automatically by `~/.gitconfig` for any `github.com/loouis/...` remote, so Louis's email stays out of the public history. Don't add a per-repo `user.email`.
 
 ## Folder contract
 See README.md → "Repo structure". In short: `skills/<category>/<skill-name>/` with `SKILL.md` (frontmatter `name` = folder name, a `description` that says what and when), `agents/openai.yaml` (`display_name`, `short_description`, `default_prompt` invoking `$<skill-name>`), `REFERENCES.md` (links only), and optional `assets/`, `references/`, `scripts/`, `demo/` (`index.html`, `PROMPT.md`, `preview.jpg` at 1280×720). Every category has a `README.md`; its skills table and the root README's library list are generated between `<!-- skills:… -->` / `<!-- library:… -->` markers.

@@ -107,7 +107,7 @@ This snapshot contains **9 skills** across 1 category. `find skills -name SKILL.
 ## Install
 
 ```bash
-git clone https://github.com/ahoiadigital/claude-skills.git
+git clone https://github.com/loouis/claude-skills.git
 cd claude-skills
 python3 install.py
 ```

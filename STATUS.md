@@ -8,6 +8,7 @@ _Updated 2026-09-24._
 - `scripts/validate-skills.cjs` checks the contract (names, frontmatter, openai.yaml, links-only references, demo files and preview size, private paths, engine copies). It caught all five faults planted in a test copy.
 
 ## Current
+- 2026-09-24: the repo moved from `ahoiadigital` to Louis's personal account, `loouis/claude-skills`. GitHub redirects the old address.
 - Louis is testing the gooey-section skills in real builds.
 
 ## Decisions
