@@ -137,3 +137,9 @@ ln -s "$PWD/skills/sections/gooey-section-taffy" ~/.claude/skills/
    node scripts/validate-skills.cjs
    ```
 5. Run `python3 install.py`, then commit: small commits, one skill each, `Add <skill-name> skill` or `Update <skill-name> skill`.
+
+---
+
+## License
+
+MIT. Use, adapt and ship these skills in your own work; keep the copyright notice. See [LICENSE](LICENSE).
