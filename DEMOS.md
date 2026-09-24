@@ -36,18 +36,18 @@ node scripts/validate-skills.cjs     # check every skill against the folder cont
 
 - Total: 9
 - With demos: 9
-- sections: 9
+- ui/sections: 9
 
 ## Demo index
 
 | Skill | Category | Demo | Preview | Prompt |
 | --- | --- | --- | --- | --- |
-| gooey-section-drift | sections | [Open](skills/sections/gooey-section-drift/demo/index.html) | [Preview](skills/sections/gooey-section-drift/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-drift/demo/PROMPT.md) |
-| gooey-section-elastic | sections | [Open](skills/sections/gooey-section-elastic/demo/index.html) | [Preview](skills/sections/gooey-section-elastic/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-elastic/demo/PROMPT.md) |
-| gooey-section-goo | sections | [Open](skills/sections/gooey-section-goo/demo/index.html) | [Preview](skills/sections/gooey-section-goo/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-goo/demo/PROMPT.md) |
-| gooey-section-honey | sections | [Open](skills/sections/gooey-section-honey/demo/index.html) | [Preview](skills/sections/gooey-section-honey/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-honey/demo/PROMPT.md) |
-| gooey-section-peel | sections | [Open](skills/sections/gooey-section-peel/demo/index.html) | [Preview](skills/sections/gooey-section-peel/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-peel/demo/PROMPT.md) |
-| gooey-section-slosh | sections | [Open](skills/sections/gooey-section-slosh/demo/index.html) | [Preview](skills/sections/gooey-section-slosh/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-slosh/demo/PROMPT.md) |
-| gooey-section-taffy | sections | [Open](skills/sections/gooey-section-taffy/demo/index.html) | [Preview](skills/sections/gooey-section-taffy/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-taffy/demo/PROMPT.md) |
-| gooey-section-twin | sections | [Open](skills/sections/gooey-section-twin/demo/index.html) | [Preview](skills/sections/gooey-section-twin/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-twin/demo/PROMPT.md) |
-| gooey-section-wave | sections | [Open](skills/sections/gooey-section-wave/demo/index.html) | [Preview](skills/sections/gooey-section-wave/demo/preview.jpg) | [Prompt](skills/sections/gooey-section-wave/demo/PROMPT.md) |
+| gooey-section-drift | ui/sections | [Open](skills/ui/sections/gooey-section-drift/demo/index.html) | [Preview](skills/ui/sections/gooey-section-drift/demo/preview.jpg) | [Prompt](skills/ui/sections/gooey-section-drift/demo/PROMPT.md) |
+| gooey-section-elastic | ui/sections | [Open](skills/ui/sections/gooey-section-elastic/demo/index.html) | [Preview](skills/ui/sections/gooey-section-elastic/demo/preview.jpg) | [Prompt](skills/ui/sections/gooey-section-elastic/demo/PROMPT.md) |
+| gooey-section-goo | ui/sections | [Open](skills/ui/sections/gooey-section-goo/demo/index.html) | [Preview](skills/ui/sections/gooey-section-goo/demo/preview.jpg) | [Prompt](skills/ui/sections/gooey-section-goo/demo/PROMPT.md) |
+| gooey-section-honey | ui/sections | [Open](skills/ui/sections/gooey-section-honey/demo/index.html) | [Preview](skills/ui/sections/gooey-section-honey/demo/preview.jpg) | [Prompt](skills/ui/sections/gooey-section-honey/demo/PROMPT.md) |
+| gooey-section-peel | ui/sections | [Open](skills/ui/sections/gooey-section-peel/demo/index.html) | [Preview](skills/ui/sections/gooey-section-peel/demo/preview.jpg) | [Prompt](skills/ui/sections/gooey-section-peel/demo/PROMPT.md) |
+| gooey-section-slosh | ui/sections | [Open](skills/ui/sections/gooey-section-slosh/demo/index.html) | [Preview](skills/ui/sections/gooey-section-slosh/demo/preview.jpg) | [Prompt](skills/ui/sections/gooey-section-slosh/demo/PROMPT.md) |
+| gooey-section-taffy | ui/sections | [Open](skills/ui/sections/gooey-section-taffy/demo/index.html) | [Preview](skills/ui/sections/gooey-section-taffy/demo/preview.jpg) | [Prompt](skills/ui/sections/gooey-section-taffy/demo/PROMPT.md) |
+| gooey-section-twin | ui/sections | [Open](skills/ui/sections/gooey-section-twin/demo/index.html) | [Preview](skills/ui/sections/gooey-section-twin/demo/preview.jpg) | [Prompt](skills/ui/sections/gooey-section-twin/demo/PROMPT.md) |
+| gooey-section-wave | ui/sections | [Open](skills/ui/sections/gooey-section-wave/demo/index.html) | [Preview](skills/ui/sections/gooey-section-wave/demo/preview.jpg) | [Prompt](skills/ui/sections/gooey-section-wave/demo/PROMPT.md) |

@@ -25,6 +25,15 @@ for (const c of cats) {
   if (t) w(path.relative(ROOT, c.readme), t);
 }
 
+// ---------- group READMEs (e.g. skills/ui/README.md) ----------
+for (const g of new Set(cats.filter(c => c.id.includes('/')).map(c => c.id.split('/')[0]))) {
+  const f = path.join(ROOT, 'skills', g, 'README.md');
+  if (!fs.existsSync(f)) continue;
+  const list = cats.filter(c => c.id.startsWith(g + '/')).map(c => `- [${c.title}](${c.id.slice(g.length + 1)}/README.md) - ${c.skills.length} skill${c.skills.length === 1 ? '' : 's'}`).join('\n');
+  const t = replaceBetween(fs.readFileSync(f, 'utf8'), 'categories', list);
+  if (t) w(path.relative(ROOT, f), t);
+}
+
 // ---------- DEMOS.md ----------
 w('DEMOS.md', `# Skill Demos
 

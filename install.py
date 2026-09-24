@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Link every skill in skills/<category>/ into ~/.claude/skills so Claude Code finds it.
+"""Link every skill under skills/ (any depth, e.g. skills/ui/sections/<skill>) into ~/.claude/skills.
 
     python3 install.py           # link all skills (safe to rerun)
     python3 install.py --dry-run # show what would change
@@ -26,7 +26,7 @@ def skill_name(d):
 
 problems = 0
 TARGET.mkdir(parents=True, exist_ok=True)
-found = sorted({p.parent for p in SKILLS.glob('*/*/SKILL.md')} | {p.parent for p in SKILLS.glob('*/SKILL.md')}, key=lambda p: p.name)
+found = sorted({p.parent for p in SKILLS.rglob('SKILL.md')}, key=lambda p: p.name)
 seen = {}
 for d in found:
     if d.name in seen:

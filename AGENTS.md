@@ -3,7 +3,7 @@
 Louis's agent skills, published at https://github.com/loouis/skills. **This repo is public.** On this Mac it is checked out at `Tools/claude-skills` (a folder named `skills` would collide with the existing `Tools/Skills` on the case-insensitive disk). Skills live in category folders, each skill with `SKILL.md`, `REFERENCES.md`, `agents/openai.yaml` and, for visual skills, a `demo/`.
 
 ## What to do here
-- Add new skills under `skills/<category>/`.
+- Add new skills under `skills/<group>/<category>/`, for example `skills/ui/sections/`.
 - Improve existing skills: `SKILL.md` first, then `REFERENCES.md`, then the demo.
 - Keep skills procedural: steps, defaults, guardrails, checks.
 
@@ -14,7 +14,7 @@ Louis's agent skills, published at https://github.com/loouis/skills. **This repo
 - Commits here use GitHub's no-reply address for `loouis`, set automatically by `~/.gitconfig` for any `github.com/loouis/...` remote, so Louis's email stays out of the public history. Don't add a per-repo `user.email`.
 
 ## Folder contract
-See README.md → "Repo structure". In short: `skills/<category>/<skill-name>/` with `SKILL.md` (frontmatter `name` = folder name, a `description` that says what and when), `agents/openai.yaml` (`display_name`, `short_description`, `default_prompt` invoking `$<skill-name>`), `REFERENCES.md` (links only), and optional `assets/`, `references/`, `scripts/`, `demo/` (`index.html`, `PROMPT.md`, `preview.jpg` at 1280×720). Every category has a `README.md`; its skills table and the root README's library list are generated between `<!-- skills:… -->` / `<!-- library:… -->` markers.
+See README.md → "Repo structure". In short: `skills/<group>/<category>/<skill-name>/` with `SKILL.md` (frontmatter `name` = folder name, a `description` that says what and when), `agents/openai.yaml` (`display_name`, `short_description`, `default_prompt` invoking `$<skill-name>`), `REFERENCES.md` (links only), and optional `assets/`, `references/`, `scripts/`, `demo/` (`index.html`, `PROMPT.md`, `preview.jpg` at 1280×720). Every group and category has a `README.md`; the category skills tables, the group category lists and the root README's library list are generated between `<!-- skills:… -->`, `<!-- categories:… -->` and `<!-- library:… -->` markers.
 
 ## Commands
 - `python3 install.py` — link every skill into `~/.claude/skills/` (`--dry-run` to preview).
@@ -26,5 +26,5 @@ See README.md → "Repo structure". In short: `skills/<category>/<skill-name>/` 
 - No client or project names, no private file paths, no emails, keys or tokens, nothing from private repos beyond what a skill needs. The validator flags private paths.
 
 ## gooey-section family
-- Generated: edit `sources/gooey-section/` (engine, `engine.md`, `demo.html`, `PROMPT.md`, `REFERENCES.md`, per-variant text in `build.py`), then `python3 sources/gooey-section/build.py`. Never hand-edit `skills/sections/gooey-section-*`.
-- The engine must stay a 1:1 port of the original lab. The lab and the tests that prove the match live in Louis's private labs repo (a sibling checkout, `../labs`): after changing the engine or rebuilding, run `node tests/gooey-section-parity.cjs` and `node tests/gooey-section-browser.cjs` there.
+- Generated: the sources (engine, `engine.md`, `demo.html`, `PROMPT.md`, `REFERENCES.md`, per-variant text and `build.py`) live in Louis's private labs repo at `../labs/skills/gooey-section/`, next to the original lab. Edit them there and run `python3 skills/gooey-section/build.py` from the labs repo; it writes into `skills/ui/sections/` here. Never hand-edit `skills/ui/sections/gooey-section-*`.
+- The engine must stay a 1:1 port of the original lab. After changing it or rebuilding, run `node tests/gooey-section-parity.cjs` and `node tests/gooey-section-browser.cjs` in the labs repo.

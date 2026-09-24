@@ -26,37 +26,39 @@ function titleOf(readme, fallback) {
   const m = readme && readme.match(/^#\s+(.+)$/m);
   return m ? m[1].trim() : fallback;
 }
-// every skills/<category>/<skill>/SKILL.md, sorted by category then name
+// every SKILL.md under skills/, at any depth. A skill's category is the folder path
+// between skills/ and the skill folder, e.g. "ui/sections".
 function listSkills() {
   const out = [];
-  for (const category of fs.readdirSync(SKILLS).sort()) {
-    const cdir = path.join(SKILLS, category);
-    if (!fs.statSync(cdir).isDirectory()) continue;
-    for (const name of fs.readdirSync(cdir).sort()) {
-      const dir = path.join(cdir, name), file = path.join(dir, 'SKILL.md');
-      if (!fs.existsSync(file)) continue;
+  const rel = p => path.relative(ROOT, p).split(path.sep).join('/');
+  (function walk(dir) {
+    for (const name of fs.readdirSync(dir).sort()) {
+      const full = path.join(dir, name);
+      if (!fs.statSync(full).isDirectory()) continue;
+      const file = path.join(full, 'SKILL.md');
+      if (!fs.existsSync(file)) { walk(full); continue; }
       const text = fs.readFileSync(file, 'utf8');
-      const agents = path.join(dir, 'agents', 'openai.yaml');
+      const agents = path.join(full, 'agents', 'openai.yaml');
       const ui = fs.existsSync(agents) ? yamlInterface(fs.readFileSync(agents, 'utf8')) : {};
-      const rel = p => path.relative(ROOT, p).split(path.sep).join('/');
-      const has = p => fs.existsSync(path.join(dir, p));
+      const has = p => fs.existsSync(path.join(full, p));
       out.push({
-        category, name, dir, rel: rel(dir), fm: frontmatter(text) || {}, ui,
+        category: path.relative(SKILLS, dir).split(path.sep).join('/'), name, dir: full, rel: rel(full), fm: frontmatter(text) || {}, ui,
         display: ui.display_name || name, short: ui.short_description || '',
-        demo: has('demo/index.html') ? rel(path.join(dir, 'demo/index.html')) : null,
-        preview: has('demo/preview.jpg') ? rel(path.join(dir, 'demo/preview.jpg')) : null,
-        prompt: has('demo/PROMPT.md') ? rel(path.join(dir, 'demo/PROMPT.md')) : null,
+        demo: has('demo/index.html') ? rel(path.join(full, 'demo/index.html')) : null,
+        preview: has('demo/preview.jpg') ? rel(path.join(full, 'demo/preview.jpg')) : null,
+        prompt: has('demo/PROMPT.md') ? rel(path.join(full, 'demo/PROMPT.md')) : null,
       });
     }
-  }
-  return out;
+  })(SKILLS);
+  return out.sort((a, b) => (a.category + '/' + a.name).localeCompare(b.category + '/' + b.name));
 }
 function categories(skills) {
   const cats = [...new Set(skills.map(s => s.category))];
   return cats.map(c => {
     const readme = path.join(SKILLS, c, 'README.md');
     const text = fs.existsSync(readme) ? fs.readFileSync(readme, 'utf8') : '';
-    return { id: c, title: titleOf(text, c[0].toUpperCase() + c.slice(1)), readme, text, skills: skills.filter(s => s.category === c) };
+    const leaf = c.split('/').pop();
+    return { id: c, title: titleOf(text, leaf[0].toUpperCase() + leaf.slice(1)), readme, text, skills: skills.filter(s => s.category === c) };
   });
 }
 function replaceBetween(text, tag, body) {

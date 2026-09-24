@@ -10,10 +10,15 @@ try { puppeteer = require('puppeteer'); } catch { console.error('puppeteer not f
 const root = path.resolve(__dirname, '..', 'skills');
 const only = process.argv.slice(2);
 const demos = [];
-for (const cat of fs.readdirSync(root)) for (const s of fs.existsSync(path.join(root, cat)) && fs.statSync(path.join(root, cat)).isDirectory() ? fs.readdirSync(path.join(root, cat)) : []) {
-  const html = path.join(root, cat, s, 'demo', 'index.html');
-  if (fs.existsSync(html) && (!only.length || only.includes(s))) demos.push({ name: s, html });
-}
+(function walk(dir) {
+  for (const name of fs.readdirSync(dir)) {
+    const full = path.join(dir, name);
+    if (!fs.statSync(full).isDirectory()) continue;
+    const html = path.join(full, 'demo', 'index.html');
+    if (fs.existsSync(path.join(full, 'SKILL.md'))) { if (fs.existsSync(html) && (!only.length || only.includes(name))) demos.push({ name, html }); }
+    else walk(full);
+  }
+})(root);
 (async () => {
   const browser = await puppeteer.launch({ headless: true, args: ['--enable-unsafe-swiftshader'] });
   for (const d of demos) {
@@ -29,11 +34,9 @@ for (const cat of fs.readdirSync(root)) for (const s of fs.existsSync(path.join(
     console.log('preview', d.name);
   }
   // README hero: a 3 x 3 grid of the first nine previews, labelled
-  const all = [];
-  for (const cat of fs.readdirSync(root)) for (const s of fs.statSync(path.join(root, cat)).isDirectory() ? fs.readdirSync(path.join(root, cat)) : []) {
-    const jpg = path.join(root, cat, s, 'demo', 'preview.jpg');
-    if (fs.existsSync(jpg)) all.push({ name: s, src: 'data:image/jpeg;base64,' + fs.readFileSync(jpg).toString('base64') });
-  }
+  const all = demos.filter(d => fs.existsSync(path.join(path.dirname(d.html), 'preview.jpg'))).length === demos.length && !only.length
+    ? demos.map(d => ({ name: d.name, src: 'data:image/jpeg;base64,' + fs.readFileSync(path.join(path.dirname(d.html), 'preview.jpg')).toString('base64') }))
+    : [];
   if (all.length) {
     const page = await browser.newPage();
     await page.setViewport({ width: 1600, height: 900, deviceScaleFactor: 1 });

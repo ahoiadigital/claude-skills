@@ -54,15 +54,14 @@ for (const s of skills) {
   }
 }
 for (const c of categories(skills)) if (!c.text) fail(`skills/${c.id}`, 'missing category README.md');
+for (const g of new Set(skills.map(s => s.category.split('/')[0]))) if (skills.some(s => s.category.includes('/') && s.category.startsWith(g + '/')) && !fs.existsSync(path.join(SKILLS, g, 'README.md'))) fail(`skills/${g}`, 'missing group README.md');
 
-// generated families: every copy of a shared engine matches its source
-const src = path.join(ROOT, 'sources/gooey-section/gooey-section.js');
-if (fs.existsSync(src)) {
-  const want = crypto.createHash('sha1').update(fs.readFileSync(src)).digest('hex');
-  for (const s of skills.filter(s => s.name.startsWith('gooey-section-'))) {
-    const f = path.join(s.dir, 'assets/gooey-section.js');
-    if (!fs.existsSync(f) || crypto.createHash('sha1').update(fs.readFileSync(f)).digest('hex') !== want) fail(s.rel, 'engine copy differs from sources/gooey-section (rebuild)');
-  }
+// generated families: every skill in a family ships an identical copy of its shared engine
+const gooey = skills.filter(s => s.name.startsWith('gooey-section-')).map(s => [s, path.join(s.dir, 'assets/gooey-section.js')]);
+if (gooey.length) {
+  const hash = f => fs.existsSync(f) ? crypto.createHash('sha1').update(fs.readFileSync(f)).digest('hex') : null;
+  const want = hash(gooey[0][1]);
+  for (const [s, f] of gooey) if (!want || hash(f) !== want) fail(s.rel, 'engine copy differs from the other gooey-section skills (rebuild them together)');
 }
 
 if (failures.length) { console.error(failures.join('\n')); console.error(`\n${failures.length} problem(s) in ${skills.length} skills`); process.exit(1); }
