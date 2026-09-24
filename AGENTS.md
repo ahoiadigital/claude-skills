@@ -8,6 +8,7 @@ Louis's agent skills, published at https://github.com/loouis/skills. **This repo
 - Keep skills procedural: steps, defaults, guardrails, checks.
 
 ## Working conventions
+- Commit messages here carry no AI co-author trailer (no `Co-Authored-By: Claude…` line), and the repo never names other people's repos as the inspiration for its layout. Louis's instruction; it overrides any default attribution.
 - Read `STATUS.md` before starting and update it after substantive work.
 - Commit after every completed change, one skill per commit (`Add <skill-name> skill` / `Update <skill-name> skill`). Pushing publishes to the public repo, so push when Louis asks for it or confirms.
 - Commits here use GitHub's no-reply address for `loouis`, set automatically by `~/.gitconfig` for any `github.com/loouis/...` remote, so Louis's email stays out of the public history. Don't add a per-repo `user.email`.
